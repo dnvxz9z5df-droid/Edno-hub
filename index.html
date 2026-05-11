@@ -6,8 +6,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#f5f6fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#c07828">
+<meta name="apple-mobile-web-app-title" content="EDN Hub">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.svg">
 <title>EDN Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
@@ -272,7 +274,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 select,input[type="range"]{font-family:var(--sans);background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);padding:8px 12px;font-size:.8rem;width:100%;outline:none}
 input[type="range"]{-webkit-appearance:none;padding:0;height:4px;border:none;border-radius:20px}
 input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:var(--blue);border-radius:50%}
-.toast{position:fixed;bottom:calc(var(--nav-h) + var(--safe-bottom) + 12px);left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:.78rem;font-weight:600;z-index:999;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap}
+.toast{position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 12px);left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:.78rem;font-weight:600;z-index:999;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 [data-theme="light"] .nav{background:rgba(255,255,255,.98)}
 [data-theme="light"] .dash-hero{background:linear-gradient(135deg,#deeaff 0%,#f0f4ff 100%);border-color:#b8ceff}
@@ -562,7 +564,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
 .h-recette-tag.active{border-color:var(--orange);background:var(--orange-dim);color:var(--orange);}
 .h-be-btn{padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface2);color:var(--muted);font-family:var(--sans);font-size:.72rem;font-weight:700;cursor:pointer;transition:all .15s;}
 .h-be-btn.active{border-color:#22d3ee;background:rgba(34,211,238,.15);color:#22d3ee;}
-.h-toast{position:fixed;bottom:calc(var(--nav-h) + var(--safe-bottom) + 12px);left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:.78rem;font-weight:600;z-index:999;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;}
+.h-toast{position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 12px);left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;font-size:.78rem;font-weight:600;z-index:999;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;}
 .h-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js"></script>
@@ -946,9 +948,9 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   <!-- ══ PANE AGENDA (caché, géré via setCalMainTab) ══ -->
 
   <!-- FAB Calendrier -->
-  <button id="fab-cal" onclick="openEntryModal(null,null)" style="position:fixed;bottom:calc(var(--nav-h) + var(--safe-bottom) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--blue);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(74,127,255,.5);z-index:150;display:flex;align-items:center;justify-content:center;transition:transform .15s;" onmousedown="this.style.transform='scale(.9)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
+  <button id="fab-cal" onclick="openEntryModal(null,null)" style="position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--blue);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(74,127,255,.5);z-index:150;display:flex;align-items:center;justify-content:center;transition:transform .15s;" onmousedown="this.style.transform='scale(.9)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
   <!-- FAB Révisions -->
-  <button id="fab-rev" onclick="openRevModal()" style="display:none;position:fixed;bottom:calc(var(--nav-h) + var(--safe-bottom) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--green);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(52,201,138,.5);z-index:150;align-items:center;justify-content:center;transition:transform .15s;" onmousedown="this.style.transform='scale(.9)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
+  <button id="fab-rev" onclick="openRevModal()" style="display:none;position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--green);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(52,201,138,.5);z-index:150;align-items:center;justify-content:center;transition:transform .15s;" onmousedown="this.style.transform='scale(.9)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
 
 </div>
 
@@ -7284,6 +7286,16 @@ renderCustomFilterBtns();renderCustomEntryTypeBtns();
   }
 
 })();
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log('EDN Hub SW actif'))
+      .catch(e => console.log('SW erreur', e));
+  });
+}
 </script>
 </body>
 </html>
