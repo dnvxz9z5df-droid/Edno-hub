@@ -950,7 +950,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   <!-- FAB Calendrier -->
   <button id="fab-cal" onclick="openEntryModal(null,null)" style="position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--blue);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(74,127,255,.5);z-index:10000;display:flex;align-items:center;justify-content:center;transition:transform .15s;" onmousedown="this.style.transform='scale(.9)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
   <!-- FAB Révisions -->
-  <button id="fab-rev" onclick="openRevModal()" style="display:none;position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--green);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(52,201,138,.5);z-index:10000;align-items:center;justify-content:center;transition:transform .15s;" onmousedown="this.style.transform='scale(.9)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
+  <button id="fab-rev" onclick="openRevModal()" style="display:none;position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--green);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(52,201,138,.5);z-index:10001;align-items:center;justify-content:center;transition:transform .15s;" onmousedown="this.style.transform='scale(.9)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
 
 </div>
 
@@ -2457,8 +2457,8 @@ function initPlan(){
   const fabRev=document.getElementById('fab-rev');
   if(paneRev)paneRev.style.display='none';
   if(paneCal)paneCal.style.display='block';
-  if(fabCal)fabCal.style.display='flex';
-  if(fabRev)fabRev.style.display='none';
+  if(fabCal){fabCal.style.display='flex';fabCal.style.pointerEvents='auto';}
+  if(fabRev){fabRev.style.display='none';fabRev.style.pointerEvents='none';}
   // Highlight correct main tab
   ['rev','cal','agenda'].forEach(t=>{
     const btn=document.getElementById('cal-maintab-'+t);
@@ -2480,14 +2480,14 @@ function setCalMainTab(tab){
   if(tab==='rev'){
     if(paneRev)paneRev.style.display='block';
     if(paneCal)paneCal.style.display='none';
-    if(fabCal)fabCal.style.display='none';
-    if(fabRev){fabRev.style.display='flex';}
+    if(fabCal){fabCal.style.display='none';fabCal.style.pointerEvents='none';}
+    if(fabRev){fabRev.style.display='flex';fabRev.style.pointerEvents='auto';}
     initRevisions();
   } else {
     if(paneRev)paneRev.style.display='none';
     if(paneCal)paneCal.style.display='block';
-    if(fabCal)fabCal.style.display='flex';
-    if(fabRev)fabRev.style.display='none';
+    if(fabCal){fabCal.style.display='flex';fabCal.style.pointerEvents='auto';}
+    if(fabRev){fabRev.style.display='none';fabRev.style.pointerEvents='none';}
     const sub=document.getElementById('cal-sub-toggle');
     if(tab==='cal'){
       if(sub)sub.style.display='flex';
