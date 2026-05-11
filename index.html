@@ -3126,9 +3126,16 @@ function closeRevDoneModal(){
 }
 
 function openRevModal(){
+  const di=document.getElementById('rev-date');
   if(di)di.value=revTodayStr();
   const m=document.getElementById('rev-create-modal');
-  if(m)m.style.display='flex';
+  if(!m){alert('ERREUR: modal introuvable');return;}
+  m.style.setProperty('display','flex','important');
+  m.style.setProperty('position','fixed','important');
+  m.style.setProperty('inset','0','important');
+  m.style.setProperty('z-index','20000','important');
+  m.style.setProperty('align-items','flex-end','important');
+  m.style.setProperty('background','rgba(0,0,0,.7)','important');
   const ti=document.getElementById('rev-title');
   if(ti){ti.value='';setTimeout(()=>ti.focus(),300)}
   const ni=document.getElementById('rev-notes');
@@ -3137,7 +3144,7 @@ function openRevModal(){
 
 function closeRevModal(){
   const m=document.getElementById('rev-create-modal');
-  if(m)m.style.display='none';
+  if(m)m.style.cssText='display:none!important;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:20000;align-items:flex-end;';
 }
 
 function saveRevTask(){
@@ -7279,6 +7286,10 @@ renderCustomFilterBtns();renderCustomEntryTypeBtns();
           visibility:hidden !important;
           opacity:0 !important;
           pointer-events:none !important;
+        }
+        /* Modales toujours au-dessus, jamais affectées par les règles screen */
+        [id$="-modal"], .modal-overlay, #rev-create-modal, #cal-entry-modal, #rev-done-modal, #theorie-drawer, #cat-manager-modal {
+          display:none;
         }
       }
     `;
