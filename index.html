@@ -947,10 +947,8 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
 
   <!-- ══ PANE AGENDA (caché, géré via setCalMainTab) ══ -->
 
-  <!-- FAB Calendrier -->
-  <button id="fab-cal" onclick="openEntryModal(null,null)" style="position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--blue);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(74,127,255,.5);z-index:10000;display:flex;align-items:center;justify-content:center;transition:transform .15s;" onmousedown="this.style.transform='scale(.9)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
-  <!-- FAB Révisions -->
-  <button id="fab-rev" onclick="(function(){var m=document.getElementById('rev-create-modal');if(m){m.style.cssText='display:flex!important;position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;background:rgba(0,0,0,.7)!important;z-index:99999!important;align-items:flex-end!important;';}else{alert('modal not found');}var d=document.getElementById('rev-date');if(d)d.value=new Date().toISOString().slice(0,10);var t=document.getElementById('rev-title');if(t)t.value=''})()" style="display:none;position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--green);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(52,201,138,.5);z-index:10001;align-items:center;justify-content:center;transition:transform .15s;" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
+  <!-- FAB unique -->
+  <button id="fab-main" onclick="fabMainClick()" style="position:fixed;bottom:calc(50px + env(safe-area-inset-bottom,0px) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--blue);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(74,127,255,.5);z-index:10001;display:flex;align-items:center;justify-content:center;transition:all .15s;" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform=''">+</button>
 
 </div>
 
@@ -2168,13 +2166,21 @@ function switchScreen(id,btn){
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   const screen=document.getElementById('screen-'+id);
   if(screen){screen.classList.add('active');screen.scrollTop=0;}
-  // Si btn pas passé (appel sans argument), chercher le bon bouton nav
   if(!btn){btn=document.getElementById('nav-'+id);}
   if(btn)btn.classList.add('active');
+  // Cacher le FAB sur les écrans sans FAB
+  const fab=document.getElementById('fab-main');
+  if(fab) fab.style.display = (id==='plan') ? 'flex' : 'none';
   if(id==='dash'){initDash();switchDashTab('home')}
   if(id==='plan')initPlan();
   if(id==='theorie')initTheorie();
   if(id==='sim'){document.getElementById('pane-colleges').style.display='block';document.getElementById('pane-simcas').style.display='none';initQrmHemato()}
+}
+
+var _currentFabMode = 'cal';
+function fabMainClick(){
+  if(_currentFabMode==='rev') openRevModal();
+  else openEntryModal(null,null);
 }
 
 // ════════ DASHBOARD ════════
@@ -2450,16 +2456,13 @@ function initPlan(){
   calState.year=new Date().getFullYear();
   calState.month=new Date().getMonth();
   calState.weekOffset=0;
-  // Default: show Calendrier tab (not Révisions)
   const paneRev=document.getElementById('plan-pane-rev');
   const paneCal=document.getElementById('plan-pane-cal');
-  const fabCal=document.getElementById('fab-cal');
-  const fabRev=document.getElementById('fab-rev');
+  const fab=document.getElementById('fab-main');
   if(paneRev)paneRev.style.display='none';
   if(paneCal)paneCal.style.display='block';
-  if(fabCal){fabCal.style.display='flex';fabCal.style.pointerEvents='auto';}
-  if(fabRev){fabRev.style.display='none';fabRev.style.pointerEvents='none';}
-  // Highlight correct main tab
+  if(fab){fab.style.background='var(--blue)';fab.style.boxShadow='0 4px 20px rgba(74,127,255,.5)';}
+  _currentFabMode='cal';
   ['rev','cal','agenda'].forEach(t=>{
     const btn=document.getElementById('cal-maintab-'+t);
     if(btn){btn.style.background=t==='cal'?'var(--blue)':'transparent';btn.style.color=t==='cal'?'#fff':'var(--muted)'}
@@ -2472,22 +2475,35 @@ function setCalMainTab(tab){
     const btn=document.getElementById('cal-maintab-'+t);
     if(btn){btn.style.background=t===tab?'var(--blue)':'transparent';btn.style.color=t===tab?'#fff':'var(--muted)'}
   });
-  // Show/hide panes
   const paneRev=document.getElementById('plan-pane-rev');
   const paneCal=document.getElementById('plan-pane-cal');
-  const fabCal=document.getElementById('fab-cal');
-  const fabRev=document.getElementById('fab-rev');
+  const fab=document.getElementById('fab-main');
   if(tab==='rev'){
     if(paneRev)paneRev.style.display='block';
     if(paneCal)paneCal.style.display='none';
-    if(fabCal){fabCal.style.display='none';fabCal.style.pointerEvents='none';}
-    if(fabRev){fabRev.style.display='flex';fabRev.style.pointerEvents='auto';}
+    if(fab){fab.style.background='var(--green)';fab.style.boxShadow='0 4px 20px rgba(52,201,138,.5)';}
+    _currentFabMode='rev';
     initRevisions();
   } else {
     if(paneRev)paneRev.style.display='none';
     if(paneCal)paneCal.style.display='block';
-    if(fabCal){fabCal.style.display='flex';fabCal.style.pointerEvents='auto';}
-    if(fabRev){fabRev.style.display='none';fabRev.style.pointerEvents='none';}
+    if(fab){fab.style.background='var(--blue)';fab.style.boxShadow='0 4px 20px rgba(74,127,255,.5)';}
+    _currentFabMode='cal';
+    const sub=document.getElementById('cal-sub-toggle');
+    if(tab==='cal'){
+      if(sub)sub.style.display='flex';
+      if(calState.view==='agenda')calState.view='month';
+      renderCal();
+    } else {
+      if(sub)sub.style.display='none';
+      calState.view='agenda';
+      renderCal();
+    }
+  }
+}
+  } else {
+    if(paneRev)paneRev.style.display='none';
+    if(paneCal)paneCal.style.display='block';
     const sub=document.getElementById('cal-sub-toggle');
     if(tab==='cal'){
       if(sub)sub.style.display='flex';
