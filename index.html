@@ -883,6 +883,8 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
 
   <!-- ══ PANE RÉVISIONS ══ -->
   <div id="plan-pane-rev" style="display:none;">
+    <!-- Bouton ajouter révision -->
+    <button onclick="openRevModal()" style="width:100%;padding:13px;background:var(--green);border:none;border-radius:14px;color:#000;font-family:var(--sans);font-weight:800;font-size:.9rem;cursor:pointer;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:8px;">➕ Nouvelle révision</button>
     <!-- Tabs internes -->
     <div style="display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;">
       <button id="rev-tab-today" onclick="switchRevTab('today')" style="flex:1;padding:9px;border:none;background:var(--blue);color:#fff;font-family:var(--sans);font-weight:700;font-size:.72rem;cursor:pointer;">📋 Du jour</button>
