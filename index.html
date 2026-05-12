@@ -883,6 +883,8 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
 
   <!-- ══ PANE RÉVISIONS ══ -->
   <div id="plan-pane-rev" style="display:none;">
+    <!-- Bouton TEST -->
+    <button onclick="alert('JS fonctionne!')" style="width:100%;padding:13px;background:red;border:none;border-radius:14px;color:#fff;font-family:var(--sans);font-weight:800;font-size:.9rem;cursor:pointer;margin-bottom:8px;">🔴 TEST JS</button>
     <!-- Bouton ajouter révision -->
     <button onclick="openRevModal()" style="width:100%;padding:13px;background:var(--green);border:none;border-radius:14px;color:#000;font-family:var(--sans);font-weight:800;font-size:.9rem;cursor:pointer;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:8px;">➕ Nouvelle révision</button>
     <!-- Tabs internes -->
@@ -2491,21 +2493,6 @@ function setCalMainTab(tab){
     if(paneCal)paneCal.style.display='block';
     if(fab){fab.style.background='var(--blue)';fab.style.boxShadow='0 4px 20px rgba(74,127,255,.5)';}
     _currentFabMode='cal';
-    const sub=document.getElementById('cal-sub-toggle');
-    if(tab==='cal'){
-      if(sub)sub.style.display='flex';
-      if(calState.view==='agenda')calState.view='month';
-      renderCal();
-    } else {
-      if(sub)sub.style.display='none';
-      calState.view='agenda';
-      renderCal();
-    }
-  }
-}
-  } else {
-    if(paneRev)paneRev.style.display='none';
-    if(paneCal)paneCal.style.display='block';
     const sub=document.getElementById('cal-sub-toggle');
     if(tab==='cal'){
       if(sub)sub.style.display='flex';
