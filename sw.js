@@ -1,4 +1,4 @@
-const CACHE = 'edno-hub-v96'; // ← incrémenter à chaque déploiement (v93, v94...)
+const CACHE = 'edno-hub-v97'; // ← incrémenter à chaque déploiement (v93, v94...)
 const ASSETS = [
   '/Edno-hub/',
   '/Edno-hub/index.html',
